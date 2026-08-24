@@ -1,0 +1,27 @@
+{
+  "name": "ecosaehan-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^15.4.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "lucide-react": "^0.468.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.30",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@tailwindcss/postcss": "^4.1.12",
+    "tailwindcss": "^4.1.12",
+    "typescript": "^5.8.3",
+    "eslint": "^9.35.0",
+    "eslint-config-next": "^15.4.6"
+  }
+}
