@@ -1,0 +1,30 @@
+.hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 62%;
+}
+
+.hero-visual .stamp,
+.hero-visual .visual-caption {
+  z-index: 1;
+}
+
+.hero-visual .visual-caption {
+  color: white;
+  text-shadow: 0 1px 7px rgba(0, 0, 0, 0.55);
+}
+
+.hero-visual .caption-line {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.hero-visual .stamp {
+  background: rgba(247, 248, 243, 0.72);
+}
+
+.product-label {
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
