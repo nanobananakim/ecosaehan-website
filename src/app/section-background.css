@@ -684,3 +684,36 @@
   font-weight: 600;
   color: var(--ink);
 }
+
+.admin-section {
+  display: flex;
+  justify-content: center;
+}
+
+.admin-login,
+.admin-content {
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+
+.admin-login h2,
+.admin-content h2 {
+  margin: 0 0 28px;
+  font-size: 28px;
+}
+
+.admin-login input {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.admin-login .button {
+  width: 100%;
+}
+
+.admin-error {
+  margin: 16px 0 0;
+  color: #b3261e;
+  font-size: 13px;
+}
