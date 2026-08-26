@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { ArrowRight, Check, Leaf, Link2, Mail, Menu, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowRight, Check, ChevronLeft, ChevronRight, Leaf, Link2, Mail, Menu, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
 
 const mats = [["26001347", "ESMAT30-6"], ["26001348", "ESMAT30-8"], ["-", "ESMAT30-10"], ["-", "ESMAT30-12"], ["26001349", "ESMAT30-15"]];
 const pins = [["25991808", "ES-PIN-200"], ["25991809", "ES-PIN-250"], ["25985301", "ES-IPIN-250"], ["25985288", "ES-7PIN-200"], ["25985289", "ES-UPIN-200"]];
@@ -20,8 +20,27 @@ export function Logo() {
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const navItems = [["회사소개", "/about"], ["제품소개", "/products"], ["인증·납품실적", "/certifications"], ["문의하기", "/contact"]];
-  return <header className="site-header"><div className="nav-wrap"><Logo /><nav className={menuOpen ? "nav-links open" : "nav-links"}>{navItems.map(([label, href]) => label === "제품소개" ? <div className="product-nav" key={href}><button type="button" className="product-nav-trigger" onClick={() => setMenuOpen(!menuOpen)}>{label}</button><div className="product-dropdown"><Link href="/products/palm-mat" onClick={() => setMenuOpen(false)}>1. 보행매트(야자매트)</Link><Link href="/products/tree-band" onClick={() => setMenuOpen(false)}>2. 수목천연밴드</Link><Link href="/products/tree-tie" onClick={() => setMenuOpen(false)}>3. 지주목결속바</Link><Link href="/products/cargo-tension-bar" onClick={() => setMenuOpen(false)}>4. 화물차탄력바</Link></div></div> : <Link key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</Link>)}</nav><button className="menu-toggle" aria-label="메뉴 열기" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button></div></header>;
+  const [mobileSection, setMobileSection] = useState<string | null>(null);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setMobileSection(null);
+  };
+  const toggleSection = (section: string) => {
+    setMobileSection(mobileSection === section ? null : section);
+  };
+  return <header className="site-header"><div className="nav-wrap"><Logo /><nav className={menuOpen ? "nav-links open" : "nav-links"}>
+    <Link className="home-link" href="/" onClick={closeMenu}>HOME</Link>
+    <button className="mega-trigger" type="button" aria-expanded={mobileSection === "company"} onClick={() => toggleSection("company")}>회사소개</button>
+    <button className="mega-trigger" type="button" aria-expanded={mobileSection === "products"} onClick={() => toggleSection("products")}>제품소개</button>
+    <button className="mega-trigger" type="button" aria-expanded={mobileSection === "certifications"} onClick={() => toggleSection("certifications")}>인증·납품실적</button>
+    <button className="mega-trigger" type="button" aria-expanded={mobileSection === "support"} onClick={() => toggleSection("support")}>고객센터</button>
+    <div className="mega-menu">
+      <div className={`mega-column${mobileSection === "company" ? " open" : ""}`}><button className="mega-heading" type="button" aria-expanded={mobileSection === "company"} onClick={() => toggleSection("company")}>회사소개</button><div className="mega-items"><Link href="/about" onClick={closeMenu}>회사소개</Link></div></div>
+      <div className={`mega-column${mobileSection === "products" ? " open" : ""}`}><button className="mega-heading" type="button" aria-expanded={mobileSection === "products"} onClick={() => toggleSection("products")}>제품소개</button><div className="mega-items"><Link href="/products/palm-mat" onClick={closeMenu}>보행매트(야자매트)</Link><Link href="/products/cargo-tension-bar" onClick={closeMenu}>화물차탄력바</Link><Link href="/products/tree-band" onClick={closeMenu}>수목천연밴드</Link><Link href="/products/tree-tie" onClick={closeMenu}>지주목결속바</Link><Link href="/products/house-band" onClick={closeMenu}>하우스밴드</Link></div></div>
+      <div className={`mega-column${mobileSection === "certifications" ? " open" : ""}`}><button className="mega-heading" type="button" aria-expanded={mobileSection === "certifications"} onClick={() => toggleSection("certifications")}>인증·납품실적</button><div className="mega-items"><Link href="/certifications" onClick={closeMenu}>인증·납품실적</Link></div></div>
+      <div className={`mega-column${mobileSection === "support" ? " open" : ""}`}><button className="mega-heading" type="button" aria-expanded={mobileSection === "support"} onClick={() => toggleSection("support")}>고객센터</button><div className="mega-items"><Link href="/contact" onClick={closeMenu}>문의하기</Link><Link href="/support/materials" onClick={closeMenu}>설계자료실</Link><Link href="/support/faq" onClick={closeMenu}>FAQ</Link><Link href="/support/admin" onClick={closeMenu}>관리자</Link></div></div>
+    </div>
+  </nav><button className="menu-toggle" aria-label={menuOpen ? "메뉴 닫기" : "메뉴 열기"} aria-expanded={menuOpen} onClick={() => { setMenuOpen(!menuOpen); setMobileSection(null); }}>{menuOpen ? <X /> : <Menu />}</button></div></header>;
 }
 
 export function Footer() {
@@ -30,19 +49,74 @@ export function Footer() {
 
 function Shell({ children }: { children: React.ReactNode }) { return <><Header />{children}<Footer /></>; }
 function Eyebrow({ children }: { children: React.ReactNode }) { return <p className="eyebrow"><span />{children}</p>; }
+function SupportPlaceholderPage({ title }: { title: string }) { return <Shell><section className="section-pad"><div className="section-heading"><Eyebrow>SUPPORT</Eyebrow><h2>{title}</h2></div><p>준비 중입니다.</p></section></Shell>; }
 
-export function HomePage() {
-  return <Shell><section className="hero section-pad"><div className="hero-inner"><div className="hero-copy"><Eyebrow>NATURAL MATERIAL MANUFACTURER</Eyebrow><h1>천연 소재로 만드는<br /><em>보행매트, 에코새한</em></h1><p className="hero-desc">천연 소재로 자연을 지키는 길을 만드는 기업, 에코새한<br />정직한 생산과 꾸준한 품질관리로 더 나은 현장을 만듭니다.</p><div className="hero-actions"><Link className="button button-primary" href="/products">제품 라인업 보기 <ArrowRight size={18} /></Link><Link className="text-link" href="/contact">문의하기 <ArrowRight size={16} /></Link></div></div><div className="hero-visual"><img className="hero-image" src="/보행매트-시공사진.png" alt="천연 야자섬유 보행매트가 설치된 산책로" /></div></div></section></Shell>;
+function HeroSlider({ slides }: { slides: string[] }) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (slides.length < 2) return;
+    const timer = setInterval(() => setIndex(i => (i + 1) % slides.length), 4500);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  if (slides.length === 0) {
+    return <div className="hero-slider hero-slider-empty"><p>배너 이미지가 준비되는 대로 표시됩니다.</p></div>;
+  }
+
+  const goTo = (i: number) => setIndex((i + slides.length) % slides.length);
+
+  return <div className="hero-slider">
+    <div className="hero-slider-track" style={{ transform: `translateX(-${index * 100}%)` }}>
+      {slides.map((src, i) => <img key={src} className="hero-slider-image" src={src} alt={`에코새한 배너 이미지 ${i + 1}`} />)}
+    </div>
+    {slides.length > 1 && <>
+      <button type="button" className="hero-slider-arrow hero-slider-prev" aria-label="이전 이미지" onClick={() => goTo(index - 1)}><ChevronLeft size={20} /></button>
+      <button type="button" className="hero-slider-arrow hero-slider-next" aria-label="다음 이미지" onClick={() => goTo(index + 1)}><ChevronRight size={20} /></button>
+      <div className="hero-slider-dots">{slides.map((_, i) => <button key={i} type="button" className={i === index ? "hero-slider-dot active" : "hero-slider-dot"} aria-label={`${i + 1}번째 이미지로 이동`} onClick={() => setIndex(i)} />)}</div>
+    </>}
+  </div>;
+}
+
+const productCategoryRows = [
+  [
+    { slug: "palm-mat", title: "보행매트(야자매트)", href: "/products/palm-mat" },
+    { slug: "cargo-tension-bar", title: "화물차탄력바", href: "/products/cargo-tension-bar" }
+  ],
+  [
+    { slug: "tree-band", title: "수목천연밴드", href: "/products/tree-band" },
+    { slug: "tree-tie", title: "지주목결속바", href: "/products/tree-tie" },
+    { slug: "house-band", title: "하우스밴드", href: "/products/house-band" }
+  ]
+];
+
+function CategoryNav({ images }: { images: Record<string, string | null> }) {
+  return <section className="category-nav section-pad">
+    {productCategoryRows.map(row => <div key={row.map(cat => cat.slug).join("-")} className={`category-row category-row-${row.length}`}>
+      {row.map(cat => <Link key={cat.slug} className="category-card" data-slug={cat.slug} href={cat.href}>
+        <div className="category-card-image">{images[cat.slug] ? <img src={images[cat.slug]!} alt={cat.title} /> : <span className="category-card-placeholder" />}</div>
+        <span className="category-card-name">{cat.title}</span>
+      </Link>)}
+    </div>)}
+  </section>;
+}
+
+export function HomePage({ slides, categoryImages }: { slides: string[]; categoryImages: Record<string, string | null> }) {
+  return <Shell><section className="hero section-pad"><div className="hero-inner"><div className="hero-copy"><Eyebrow>NATURAL MATERIAL MANUFACTURER</Eyebrow><h1>천연 소재로 만드는<br /><em>보행매트, 에코새한</em></h1><p className="hero-desc">천연 소재로 자연을 지키는 길을 만드는 기업, 에코새한<br />정직한 생산과 꾸준한 품질관리로 더 나은 현장을 만듭니다.</p><div className="hero-actions"><Link className="button button-primary" href="/products">제품 라인업 보기 <ArrowRight size={18} /></Link><Link className="text-link" href="/contact">문의하기 <ArrowRight size={16} /></Link></div></div><div className="hero-visual"><HeroSlider slides={slides} /></div></div></section><CategoryNav images={categoryImages} /></Shell>;
 }
 
 export function AboutPage() { return <Shell><section className="about section-pad"><div className="section-heading"><Eyebrow>ABOUT ECO SAEHAN</Eyebrow><h2>자연을 생각하는 마음,<br /><em>정직한 제품으로 답합니다.</em></h2></div><div className="about-grid"><div className="about-statement"><p>천연 소재를 바탕으로 더 오래 쓰이고, 자연에 부담을 덜 주는 제품을 고민합니다.</p><span>작은 약속도 꼼꼼하게 지키며 고객사 현장에<br />꾸준히 신뢰를 쌓아가는 제조기업입니다.</span></div><Greeting /></div></section></Shell>; }
 function Greeting() { return <div className="greeting"><span className="quote-mark">“</span><p>안녕하십니까.</p><p>저희 에코새한은 천연 소재를 바탕으로 제품을 만들며, 환경에 부담을 덜 주는 방식을 늘 고민하는 기업입니다.</p><p>아직 시작한 지 오래되지 않은 기업이지만, 그렇기에 더욱 꼼꼼하게 품질을 관리하고 정직하게 제품을 만들겠다는 마음가짐으로 하루하루 실적을 쌓아가고 있습니다. 공인 시험기관의 성적서를 통해 제품 품질을 객관적으로 증명하며 성실히 사업을 이어가겠습니다.</p><p>저희 제품을 믿고 선택해주시는 모든 분들께 진심으로 감사드립니다.</p><strong>에코새한 대표 드림</strong></div>; }
 
-export function ProductsPage() { return <Shell><section className="products section-pad"><div className="product-header"><div><Eyebrow>PRODUCT LINEUP</Eyebrow><h2>자연의 섬유로 만든<br /><em>단단한 보행의 기반.</em></h2></div><p>100% 천연 야자섬유(코이어)로 제작한 보행매트입니다.<br />노면 포장과 비포장도로의 흙 유실 방지에 사용됩니다.</p></div><div className="product-catalog"><Link className="product-card-link" href="/products/palm-mat"><ProductCard number="1" title="보행매트(야자매트)" description="자연의 섬유로 만든 보행의 기반" icon={<Leaf />} visualClass="mat-card-visual"><div className="product-tables"><Table title="보행매트 · 단위 m" rows={mats} /><Table title="고정핀 · 단위 개" rows={pins} /></div></ProductCard></Link><Link className="product-card-link" href="/products/tree-band"><ProductCard number="2" title="수목천연밴드" description="나무를 보호하고 지지하는 천연 소재 밴드" icon={<TreePine />} visualClass="tree-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link><Link className="product-card-link" href="/products/tree-tie"><ProductCard number="3" title="지주목결속바" description="식재목과 지주목을 안정적으로 결속하는 밴드" icon={<Link2 />} visualClass="tie-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link><Link className="product-card-link" href="/products/cargo-tension-bar"><ProductCard number="4" title="화물차탄력바" description="화물 적재물을 단단하게 고정하는 탄력바" icon={<Truck />} visualClass="cargo-card-visual"><ul className="product-variants"><li>신초강력탄력바 50mm</li><li>초강력탄력바 50mm</li><li>고탄력바 50mm</li><li>고탄력바 65mm</li></ul></ProductCard></Link></div></section></Shell>; }
+export function ProductsPage() { return <Shell><section className="products section-pad"><div className="product-header"><div><Eyebrow>PRODUCT LINEUP</Eyebrow><h2>자연의 섬유로 만든<br /><em>단단한 보행의 기반.</em></h2></div><p>100% 천연 야자섬유(코이어)로 제작한 보행매트입니다.<br />노면 포장과 비포장도로의 흙 유실 방지에 사용됩니다.</p></div><div className="product-catalog"><Link className="product-card-link" href="/products/palm-mat"><ProductCard number="1" title="보행매트(야자매트)" description="자연의 섬유로 만든 보행의 기반" icon={<Leaf />} visualClass="mat-card-visual"><div className="product-tables"><Table title="보행매트 · 단위 m" rows={mats} /><Table title="고정핀 · 단위 개" rows={pins} /></div></ProductCard></Link><Link className="product-card-link" href="/products/cargo-tension-bar"><ProductCard number="2" title="화물차탄력바" description="화물 적재물을 단단하게 고정하는 탄력바" icon={<Truck />} visualClass="cargo-card-visual"><ul className="product-variants"><li>신초강력탄력바 50mm</li><li>초강력탄력바 50mm</li><li>고탄력바 50mm</li><li>고탄력바 65mm</li></ul></ProductCard></Link><Link className="product-card-link" href="/products/tree-band"><ProductCard number="3" title="수목천연밴드" description="나무를 보호하고 지지하는 천연 소재 밴드" icon={<TreePine />} visualClass="tree-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link><Link className="product-card-link" href="/products/tree-tie"><ProductCard number="4" title="지주목결속바" description="식재목과 지주목을 안정적으로 결속하는 밴드" icon={<Link2 />} visualClass="tie-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link><Link className="product-card-link" href="/products/house-band"><ProductCard number="5" title="하우스밴드" description="비닐하우스 골조를 단단히 고정하는 밴드" icon={<Package />} visualClass="house-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link></div></section></Shell>; }
 function ProductCard({ id, number, title, description, icon, visualClass, children }: { id?: string; number: string; title: string; description: string; icon: React.ReactNode; visualClass: string; children: React.ReactNode }) { return <article id={id} className="product-card-large"><div className={`product-card-visual ${visualClass}`}><span className="product-card-number">{number}</span><div className="product-card-icon">{icon}</div></div><div className="product-card-info"><h3>{title}</h3><p className="product-card-description">{description}</p><div className="product-card-content">{children}</div></div></article>; }
-export function ProductDetailPage({ type }: { type: "palm-mat" | "tree-band" | "tree-tie" | "cargo-tension-bar" }) { const details = { "palm-mat": { number: "1", title: "보행매트(야자매트)", description: "100% 천연 야자섬유(코이어)로 만든 보행매트입니다. 노면 포장과 비포장도로의 흙 유실 방지에 사용됩니다.", visualClass: "mat-card-visual", icon: <Leaf /> }, "tree-band": { number: "2", title: "수목천연밴드", description: "나무의 생장을 고려해 식재목을 보호하고 지지하는 천연 소재 밴드입니다.", visualClass: "tree-card-visual", icon: <TreePine /> }, "tree-tie": { number: "3", title: "지주목결속바", description: "식재목과 지주목을 안정적으로 결속해 초기 생장을 돕는 조경 자재입니다.", visualClass: "tie-card-visual", icon: <Link2 /> }, "cargo-tension-bar": { number: "4", title: "화물차탄력바", description: "화물 적재물을 안정적으로 고정하는 탄력바입니다.", visualClass: "cargo-card-visual", icon: <Truck /> } }[type]; return <Shell><section className="product-detail section-pad"><Link className="back-link" href="/products">← 제품소개로 돌아가기</Link><div className="detail-heading"><Eyebrow>PRODUCT {details.number}</Eyebrow><h1>{details.title}</h1><p>{details.description}</p></div><div className="detail-layout"><div className={`detail-visual ${details.visualClass}`}>{type === "palm-mat" ? <img src="/보행매트-시공사진.png" alt="보행매트가 설치된 산책로" /> : <div className="product-card-icon">{details.icon}</div>}</div><div className="detail-info">{type === "palm-mat" ? <div className="product-tables"><Table title="보행매트 · 단위 m" rows={mats} /><Table title="고정핀 · 단위 개" rows={pins} /></div> : type === "cargo-tension-bar" ? <ul className="product-variants"><li>신초강력탄력바 50mm</li><li>초강력탄력바 50mm</li><li>고탄력바 50mm</li><li>고탄력바 65mm</li></ul> : <p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p>}</div></div></section></Shell>; }
+export function ProductDetailPage({ type }: { type: "palm-mat" | "tree-band" | "tree-tie" | "house-band" | "cargo-tension-bar" }) { const details = { "palm-mat": { number: "1", title: "보행매트(야자매트)", description: "100% 천연 야자섬유(코이어)로 만든 보행매트입니다. 노면 포장과 비포장도로의 흙 유실 방지에 사용됩니다.", visualClass: "mat-card-visual", icon: <Leaf /> }, "cargo-tension-bar": { number: "2", title: "화물차탄력바", description: "화물 적재물을 안정적으로 고정하는 탄력바입니다.", visualClass: "cargo-card-visual", icon: <Truck /> }, "tree-band": { number: "3", title: "수목천연밴드", description: "나무의 생장을 고려해 식재목을 보호하고 지지하는 천연 소재 밴드입니다.", visualClass: "tree-card-visual", icon: <TreePine /> }, "tree-tie": { number: "4", title: "지주목결속바", description: "식재목과 지주목을 안정적으로 결속해 초기 생장을 돕는 조경 자재입니다.", visualClass: "tie-card-visual", icon: <Link2 /> }, "house-band": { number: "5", title: "하우스밴드", description: "비닐하우스 골조를 단단히 고정하는 밴드입니다.", visualClass: "house-card-visual", icon: <Package /> } }[type]; return <Shell><section className="product-detail section-pad"><Link className="back-link" href="/products">← 제품소개로 돌아가기</Link><div className="detail-heading"><Eyebrow>PRODUCT {details.number}</Eyebrow><h1>{details.title}</h1><p>{details.description}</p></div><div className="detail-layout"><div className={`detail-visual ${details.visualClass}`}>{type === "palm-mat" ? <img src="/보행매트-시공사진.png" alt="보행매트가 설치된 산책로" /> : <div className="product-card-icon">{details.icon}</div>}</div><div className="detail-info">{type === "palm-mat" ? <div className="product-tables"><Table title="보행매트 · 단위 m" rows={mats} /><Table title="고정핀 · 단위 개" rows={pins} /></div> : type === "cargo-tension-bar" ? <ul className="product-variants"><li>신초강력탄력바 50mm</li><li>초강력탄력바 50mm</li><li>고탄력바 50mm</li><li>고탄력바 65mm</li></ul> : <p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p>}</div></div></section></Shell>; }
 function Table({ title, rows }: { title: string; rows: string[][] }) { return <div className="mini-table-wrap"><h3>{title}</h3><div className="mini-table"><div className="mini-row mini-head"><span>식별번호</span><span>모델명</span></div>{rows.map(row => <div className="mini-row" key={row[1]}><span>{row[0]}</span><b>{row[1]}</b></div>)}</div></div>; }
 
 export function CertificationsPage() { return <Shell><section className="proof section-pad"><div className="proof-top"><div className="section-heading"><Eyebrow>TRUST & DELIVERY</Eyebrow><h2>서류로 확인하고,<br /><em>현장으로 증명합니다.</em></h2></div><div className="certificate"><div className="certificate-icon"><Check size={22} /></div><div><b>FITI 시험성적서 보유</b><p>섬유감별 · 질량 · 두께 · 인장강도/변형률<br />KS 기준 충족</p></div></div></div><div className="delivery-head"><h3>계약 및 현장실적</h3><span>2026년 기준 <b>04</b>건</span></div><div className="delivery-table"><div className="delivery-row table-head"><span>계약일</span><span>수요기관</span><span>현장명</span></div>{deliveries.map(row => <div className="delivery-row" key={row[0]}><span>{row[0]}</span><span>{row[1]}</span><span>{row[2]}</span></div>)}</div></section></Shell>; }
 
 export function ContactPage() { const [sent, setSent] = useState(false); const [mailLink, setMailLink] = useState(""); function submitInquiry(event: React.FormEvent<HTMLFormElement>) { event.preventDefault(); const data = new FormData(event.currentTarget); const body = `이름: ${data.get("name")}\n연락처: ${data.get("phone")}\n\n문의 내용:\n${data.get("message")}`; setMailLink(`mailto:ecosaehan@gmail.com?subject=${encodeURIComponent("에코새한 제품 문의")}&body=${encodeURIComponent(body)}`); setSent(true); } return <Shell><section className="contact section-pad"><div className="contact-inner"><div className="contact-copy"><Eyebrow>CONTACT</Eyebrow><h2>필요한 자재,<br /><em>정확하게 상담하세요.</em></h2><p>현장에 맞는 규격과 수량을 알려주시면<br />확인 후 빠르게 안내해 드립니다.</p><div className="contact-list"><a href="tel:0538518702"><Phone size={19} />053-851-8702</a><a href="mailto:ecosaehan@gmail.com"><Mail size={19} />ecosaehan@gmail.com</a><span><Leaf size={19} />경상북도 경산시 진량읍 아사길 81-14</span></div></div><form className="contact-form" onSubmit={submitInquiry}>{sent ? <div className="form-success"><Check size={38} /><h3>문의 내용이 준비되었습니다.</h3><p>아래 버튼을 눌러 메일 앱에서 전송을 완료해 주세요.</p><a className="button button-primary" href={mailLink}>메일로 전송하기 <ArrowRight size={17} /></a></div> : <><div className="form-heading"><h3>제품 및 견적 문의</h3><span>평일 09:00 - 18:00</span></div><label>이름<input required name="name" placeholder="담당자 성함" /></label><label>연락처<input required name="phone" placeholder="전화번호 또는 이메일" /></label><label>문의 내용<textarea required name="message" placeholder="필요한 제품, 규격, 수량을 남겨주세요." rows={4} /></label><button className="button button-primary" type="submit">문의 내용 작성하기 <ArrowRight size={17} /></button></>}</form></div></section></Shell>; }
+
+export function SupportMaterialsPage() { return <SupportPlaceholderPage title="설계자료실" />; }
+export function SupportFaqPage() { return <SupportPlaceholderPage title="FAQ" />; }
+export function SupportAdminPage() { return <SupportPlaceholderPage title="관리자" />; }

@@ -32,7 +32,8 @@
   font-size: 11px !important;
 }
 
-.product-nav {
+.product-nav,
+.support-nav {
   position: relative;
 }
 
@@ -67,7 +68,8 @@
 
 .product-nav:hover .product-dropdown,
 .product-nav:focus-within .product-dropdown,
-.nav-links.open .product-dropdown {
+.support-nav:hover .product-dropdown,
+.support-nav:focus-within .product-dropdown {
   opacity: 1;
   pointer-events: auto;
   transform: translate(-50%, 0);
@@ -83,6 +85,80 @@
 .product-dropdown a:hover {
   color: var(--green);
   background: var(--mint);
+}
+
+.mega-trigger,
+.mega-heading {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.mega-trigger:hover,
+.mega-heading:hover {
+  color: var(--green);
+}
+
+.mega-menu {
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 50%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 42px;
+  width: min(1180px, calc(100vw - 64px));
+  padding: 28px 32px 32px;
+  border-top: 1px solid var(--line);
+  background: var(--cream);
+  box-shadow: 0 16px 30px rgba(23, 53, 42, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -5px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+/* nav-wrap spans the header's full height, so hovering anywhere in the
+   header (not just the narrow nav-links text row) keeps the mega-menu
+   open, and hovering the mega-menu itself (nested inside nav-wrap)
+   keeps this true too — no dead zone between trigger and panel. */
+.nav-wrap:hover .mega-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.mega-column {
+  min-width: 0;
+}
+
+.mega-heading {
+  display: block;
+  width: 100%;
+  padding-bottom: 13px;
+  border-bottom: 2px solid var(--ink);
+  color: var(--ink);
+  text-align: left;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mega-items {
+  display: grid;
+  gap: 2px;
+  padding-top: 9px;
+}
+
+.mega-items a {
+  padding: 9px 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.mega-items a:hover {
+  color: var(--green);
 }
 
 .product-cards {
@@ -181,6 +257,7 @@
 .mat-card-visual::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(175deg, transparent 0 7px, rgba(90, 51, 35, 0.4) 8px 10px); }
 .tree-card-visual { background: linear-gradient(145deg, #7ba05f, #376c48); }
 .tie-card-visual { background: linear-gradient(145deg, #6f987b, #315d4a); }
+.house-card-visual { background: linear-gradient(145deg, #5f8f78, #294f42); }
 .cargo-card-visual { background: linear-gradient(145deg, #557d74, #23443e); }
 
 .product-card-info {
@@ -381,7 +458,8 @@
     margin-top: 42px;
   }
 
-  .product-nav {
+  .product-nav,
+  .support-nav {
     position: static;
   }
 
@@ -392,7 +470,9 @@
 
   .product-dropdown,
   .product-nav:hover .product-dropdown,
-  .product-nav:focus-within .product-dropdown {
+  .product-nav:focus-within .product-dropdown,
+  .support-nav:hover .product-dropdown,
+  .support-nav:focus-within .product-dropdown {
     position: static;
     min-width: 0;
     margin-top: 4px;
@@ -403,7 +483,12 @@
     transform: none;
   }
 
-  .nav-links.open .product-dropdown {
+  .product-nav.open .product-dropdown {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .support-nav.open .product-dropdown {
     opacity: 1;
     pointer-events: auto;
   }
@@ -465,4 +550,137 @@
   .product-card {
     min-height: auto;
   }
+
+  .mega-trigger {
+    width: 100%;
+    padding: 13px 0;
+    text-align: left;
+  }
+
+  .mega-menu {
+    position: static;
+    display: block;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .mega-column {
+    border-top: 1px solid var(--line);
+  }
+
+  .mega-heading {
+    padding: 13px 0;
+    border: 0;
+  }
+
+  .mega-items {
+    display: none;
+    padding: 0 0 8px 13px;
+  }
+
+  .mega-column.open .mega-items {
+    display: grid;
+  }
+
+  .mega-items a {
+    padding: 9px 0;
+  }
+
+  .category-row {
+    gap: 20px 16px;
+  }
+
+  .category-row + .category-row {
+    margin-top: 20px;
+  }
+
+  .category-row-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .category-nav {
+    padding: 36px 0 50px;
+  }
+}
+
+.category-nav {
+  padding: 56px 0 90px;
+}
+
+.category-row {
+  display: grid;
+  gap: 28px;
+}
+
+.category-row + .category-row {
+  margin-top: 28px;
+}
+
+.category-row-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.category-row-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  color: inherit;
+  text-align: center;
+}
+
+.category-card-image {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  padding: 8%;
+  background: var(--mint);
+  transition: box-shadow 220ms ease;
+}
+
+.category-card-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 320ms ease;
+}
+
+.category-card[data-slug="house-band"] .category-card-image {
+  padding: 13%;
+}
+
+.category-card[data-slug="house-band"] .category-card-image img {
+  object-fit: cover;
+  clip-path: circle(50%);
+}
+
+.category-card-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(45deg, #e4e4e4 0 12px, #ececec 12px 24px);
+}
+
+.category-card:hover .category-card-image {
+  box-shadow: 0 14px 28px rgba(23, 53, 42, 0.16);
+}
+
+.category-card:hover .category-card-image img {
+  transform: scale(1.06);
+}
+
+.category-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
 }
