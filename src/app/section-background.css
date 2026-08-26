@@ -400,6 +400,40 @@
   font-size: 13px;
 }
 
+.palm-mat-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
+  margin-top: 56px;
+}
+
+.palm-mat-stack .mini-table-wrap {
+  width: 100%;
+  max-width: 640px;
+}
+
+.palm-mat-photo,
+.palm-mat-photo-placeholder {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 4 / 3;
+}
+
+.palm-mat-photo {
+  object-fit: cover;
+}
+
+.palm-mat-photo-placeholder {
+  display: grid;
+  place-items: center;
+  border: 2px dashed var(--line);
+  background: var(--mint);
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .product-card-number {
   color: var(--green);
   font: 500 11px 'DM Mono';
@@ -429,6 +463,11 @@
 }
 
 @media (max-width: 800px) {
+  .palm-mat-stack {
+    gap: 36px;
+    margin-top: 36px;
+  }
+
   .summary-inner {
     display: block;
   }
