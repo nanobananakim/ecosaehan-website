@@ -6,15 +6,32 @@
 
 .hero-slider-track {
   display: flex;
-  width: 100%;
   height: 100%;
-  transition: transform 500ms ease;
+  width: max-content;
+  gap: 16px;
+  animation-name: hero-marquee-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.hero-slider:hover .hero-slider-track {
+  animation-play-state: paused;
 }
 
 .hero-slider-image {
-  flex: 0 0 100%;
+  flex: 0 0 auto;
+  width: 380px;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-slider-static {
   width: 100%;
   height: 100%;
+  display: block;
   object-fit: cover;
   object-position: center;
 }
@@ -29,77 +46,25 @@
   text-align: center;
 }
 
-.hero-slider-arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border: 0;
-  border-radius: 50%;
-  color: white;
-  background: rgba(23, 53, 42, 0.55);
-  cursor: pointer;
-  transform: translateY(-50%);
-  transition: background 150ms ease;
-}
+@keyframes hero-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
 
-.hero-slider-arrow:hover {
-  background: rgba(23, 53, 42, 0.8);
-}
-
-.hero-slider-prev {
-  left: 14px;
-}
-
-.hero-slider-next {
-  right: 14px;
-}
-
-.hero-slider-dots {
-  position: absolute;
-  left: 50%;
-  bottom: 14px;
-  z-index: 2;
-  display: flex;
-  gap: 8px;
-  transform: translateX(-50%);
-}
-
-.hero-slider-dot {
-  width: 8px;
-  height: 8px;
-  padding: 0;
-  border: 0;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.55);
-  cursor: pointer;
-  transition: width 150ms ease, background 150ms ease;
-}
-
-.hero-slider-dot.active {
-  width: 22px;
-  background: white;
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (max-width: 800px) {
-  .hero-slider-arrow {
-    width: 30px;
-    height: 30px;
+  .hero-slider-image {
+    width: 260px;
   }
+}
 
-  .hero-slider-prev {
-    left: 8px;
-  }
-
-  .hero-slider-next {
-    right: 8px;
-  }
-
-  .hero-slider-dots {
-    bottom: 10px;
+@media (prefers-reduced-motion: reduce) {
+  .hero-slider-track {
+    animation: none;
   }
 }
 

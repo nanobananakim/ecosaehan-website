@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { ArrowRight, Check, ChevronLeft, ChevronRight, Leaf, Link2, Mail, Menu, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Check, Leaf, Link2, Mail, Menu, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
 import { verifyAdminPassword } from "./admin/actions";
 
 const mats = [["26001347", "ESMAT30-6"], ["26001348", "ESMAT30-8"], ["26008048", "ESMAT30-10"], ["26008049", "ESMAT30-12"], ["26001349", "ESMAT30-15"]];
@@ -54,29 +54,20 @@ function Eyebrow({ children }: { children: React.ReactNode }) { return <p classN
 function SupportPlaceholderPage({ title }: { title: string }) { return <Shell><section className="section-pad"><div className="section-heading"><Eyebrow>SUPPORT</Eyebrow><h2>{title}</h2></div><p>준비 중입니다.</p></section></Shell>; }
 
 function HeroSlider({ slides }: { slides: string[] }) {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (slides.length < 2) return;
-    const timer = setInterval(() => setIndex(i => (i + 1) % slides.length), 4500);
-    return () => clearInterval(timer);
-  }, [slides.length]);
-
   if (slides.length === 0) {
     return <div className="hero-slider hero-slider-empty"><p>배너 이미지가 준비되는 대로 표시됩니다.</p></div>;
   }
 
-  const goTo = (i: number) => setIndex((i + slides.length) % slides.length);
+  if (slides.length === 1) {
+    return <div className="hero-slider"><img className="hero-slider-static" src={slides[0]} alt="에코새한 배너 이미지" /></div>;
+  }
+
+  const track = [...slides, ...slides];
 
   return <div className="hero-slider">
-    <div className="hero-slider-track" style={{ transform: `translateX(-${index * 100}%)` }}>
-      {slides.map((src, i) => <img key={src} className="hero-slider-image" src={src} alt={`에코새한 배너 이미지 ${i + 1}`} />)}
+    <div className="hero-slider-track" style={{ animationDuration: `${slides.length * 3}s` }}>
+      {track.map((src, i) => <img key={`${src}-${i}`} className="hero-slider-image" src={src} alt={`에코새한 배너 이미지 ${(i % slides.length) + 1}`} />)}
     </div>
-    {slides.length > 1 && <>
-      <button type="button" className="hero-slider-arrow hero-slider-prev" aria-label="이전 이미지" onClick={() => goTo(index - 1)}><ChevronLeft size={20} /></button>
-      <button type="button" className="hero-slider-arrow hero-slider-next" aria-label="다음 이미지" onClick={() => goTo(index + 1)}><ChevronRight size={20} /></button>
-      <div className="hero-slider-dots">{slides.map((_, i) => <button key={i} type="button" className={i === index ? "hero-slider-dot active" : "hero-slider-dot"} aria-label={`${i + 1}번째 이미지로 이동`} onClick={() => setIndex(i)} />)}</div>
-    </>}
   </div>;
 }
 
