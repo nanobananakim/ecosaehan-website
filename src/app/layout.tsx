@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "에코새한 | 조달청 등록 야자매트 전문 제조기업",
   description: "친환경 천연섬유 보행매트로 공공기관에 신뢰할 수 있는 자재를 공급합니다.",
+  icons: {
+    icon: "/favicon.ico"
+  },
   verification: {
     other: {
       "naver-site-verification": "982105dca0e01bb05074c5718dc5a4c63bb88203"
