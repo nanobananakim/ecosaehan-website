@@ -8,7 +8,6 @@
   display: flex;
   height: 100%;
   width: max-content;
-  gap: 16px;
   animation-name: hero-marquee-scroll;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -21,7 +20,7 @@
 
 .hero-slider-image {
   flex: 0 0 auto;
-  width: 380px;
+  width: 560px;
   height: 100%;
   display: block;
   object-fit: cover;
@@ -58,7 +57,7 @@
 
 @media (max-width: 800px) {
   .hero-slider-image {
-    width: 260px;
+    width: 300px;
   }
 }
 

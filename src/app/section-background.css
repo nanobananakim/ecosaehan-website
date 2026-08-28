@@ -644,12 +644,12 @@
   }
 
   .category-nav {
-    padding: 36px 0 50px;
+    margin-top: 40px;
   }
 }
 
 .category-nav {
-  padding: 56px 0 90px;
+  margin-top: 64px;
 }
 
 .category-row {

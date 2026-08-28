@@ -84,24 +84,39 @@ const productCategoryRows = [
 ];
 
 function CategoryNav({ images }: { images: Record<string, string | null> }) {
-  return <section className="category-nav section-pad">
+  return <div className="category-nav">
     {productCategoryRows.map(row => <div key={row.map(cat => cat.slug).join("-")} className={`category-row category-row-${row.length}`}>
       {row.map(cat => <Link key={cat.slug} className="category-card" data-slug={cat.slug} href={cat.href}>
         <div className="category-card-image">{images[cat.slug] ? <img src={images[cat.slug]!} alt={cat.title} /> : <span className="category-card-placeholder" />}</div>
         <span className="category-card-name">{cat.title}</span>
       </Link>)}
     </div>)}
-  </section>;
+  </div>;
 }
 
-export function HomePage({ slides, categoryImages }: { slides: string[]; categoryImages: Record<string, string | null> }) {
-  return <Shell><section className="hero section-pad"><div className="hero-inner"><div className="hero-copy"><Eyebrow>NATURAL MATERIAL MANUFACTURER</Eyebrow><h1>천연 소재로 만드는<br /><em>보행매트, 에코새한</em></h1><p className="hero-desc">천연 소재로 자연을 지키는 길을 만드는 기업, 에코새한<br />정직한 생산과 꾸준한 품질관리로 더 나은 현장을 만듭니다.</p><div className="hero-actions"><Link className="button button-primary" href="/products">제품 라인업 보기 <ArrowRight size={18} /></Link><Link className="text-link" href="/contact">문의하기 <ArrowRight size={16} /></Link></div></div><div className="hero-visual"><HeroSlider slides={slides} /></div></div></section><CategoryNav images={categoryImages} /></Shell>;
+export function HomePage({ slides }: { slides: string[] }) {
+  return <Shell><section className="hero">
+    <HeroSlider slides={slides} />
+    <div className="hero-scrim" />
+    <div className="hero-overlay">
+      <Eyebrow>NATURAL MATERIAL MANUFACTURER</Eyebrow>
+      <h1>천연 소재로 만드는<br /><em>보행매트, 에코새한</em></h1>
+      <p className="hero-desc">천연 소재로 자연을 지키는 길을 만드는 기업, 에코새한<br />정직한 생산과 꾸준한 품질관리로 더 나은 현장을 만듭니다.</p>
+      <div className="hero-actions"><Link className="button button-primary" href="/products">제품 라인업 보기 <ArrowRight size={18} /></Link><Link className="text-link" href="/contact">문의하기 <ArrowRight size={16} /></Link></div>
+    </div>
+  </section><section className="home-intro section-pad"><div className="home-intro-inner">
+    <Eyebrow>ABOUT ECO SAEHAN</Eyebrow>
+    <p>에코새한은 친환경 소재 연구를 통해 자연과 사람이 함께 살아가는 방법을 고민합니다.</p>
+    <p>야자매트는 천연 코이어(coir) 섬유를 사용하여 제작되어, 자연 분해가 가능한 친환경 보행로 자재입니다. 수목천연밴드 역시 천연 면(cotton)과 천연 라텍스(latex)를 사용해 만들어집니다. 과거에는 수목 뿌리를 고무바로 감아 고정했지만, 저희는 시간이 지나면 땅속에서 자연 부식되는 소재를 선택해 환경을 먼저 생각했습니다.</p>
+    <p>여기에 더해, 지주목결속바로 수목 지지 작업의 편리함을 더하고, 화물용 탄력바를 생산해 과거 타이어바로 힘겹게 결속하던 작업을 훨씬 수월하게 바꾸고 있습니다.</p>
+    <p>에코새한은 앞으로도 더욱 친환경적인 소재와 기술을 연구하고 개발해 나가겠습니다. 늘 함께해주셔서 감사합니다.</p>
+  </div></section></Shell>;
 }
 
 export function AboutPage() { return <Shell><section className="about section-pad"><div className="section-heading"><Eyebrow>ABOUT ECO SAEHAN</Eyebrow><h2>자연을 생각하는 마음,<br /><em>정직한 제품으로 답합니다.</em></h2></div><div className="about-grid"><div className="about-statement"><p>천연 소재를 바탕으로 더 오래 쓰이고, 자연에 부담을 덜 주는 제품을 고민합니다.</p><span>작은 약속도 꼼꼼하게 지키며 고객사 현장에<br />꾸준히 신뢰를 쌓아가는 제조기업입니다.</span></div><Greeting /></div></section></Shell>; }
 function Greeting() { return <div className="greeting"><span className="quote-mark">“</span><p>안녕하십니까.</p><p>저희 에코새한은 천연 소재를 바탕으로 제품을 만들며, 환경에 부담을 덜 주는 방식을 늘 고민하는 기업입니다.</p><p>아직 시작한 지 오래되지 않은 기업이지만, 그렇기에 더욱 꼼꼼하게 품질을 관리하고 정직하게 제품을 만들겠다는 마음가짐으로 하루하루 실적을 쌓아가고 있습니다. 공인 시험기관의 성적서를 통해 제품 품질을 객관적으로 증명하며 성실히 사업을 이어가겠습니다.</p><p>저희 제품을 믿고 선택해주시는 모든 분들께 진심으로 감사드립니다.</p><strong>에코새한 대표 드림</strong></div>; }
 
-export function ProductsPage() { return <Shell><section className="products section-pad"><div className="product-header"><div><Eyebrow>PRODUCT LINEUP</Eyebrow><h2>자연의 섬유로 만든<br /><em>단단한 보행의 기반.</em></h2></div><p>100% 천연 야자섬유(코이어)로 제작한 보행매트입니다.<br />노면 포장과 비포장도로의 흙 유실 방지에 사용됩니다.</p></div><div className="product-catalog"><Link className="product-card-link" href="/products/palm-mat"><ProductCard number="1" title="보행매트(야자매트)" description="자연의 섬유로 만든 보행의 기반" icon={<Leaf />} visualClass="mat-card-visual"><div className="product-tables"><Table title="보행매트 · 단위 m" rows={mats} /><Table title="고정핀 · 단위 개" rows={pins} /></div></ProductCard></Link><Link className="product-card-link" href="/products/cargo-tension-bar"><ProductCard number="2" title="화물차탄력바" description="화물 적재물을 단단하게 고정하는 탄력바" icon={<Truck />} visualClass="cargo-card-visual"><ul className="product-variants"><li>신초강력탄력바 50mm</li><li>초강력탄력바 50mm</li><li>고탄력바 50mm</li><li>고탄력바 65mm</li></ul></ProductCard></Link><Link className="product-card-link" href="/products/tree-band"><ProductCard number="3" title="수목천연밴드" description="나무를 보호하고 지지하는 천연 소재 밴드" icon={<TreePine />} visualClass="tree-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link><Link className="product-card-link" href="/products/tree-tie"><ProductCard number="4" title="지주목결속바" description="식재목과 지주목을 안정적으로 결속하는 밴드" icon={<Link2 />} visualClass="tie-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link><Link className="product-card-link" href="/products/house-band"><ProductCard number="5" title="하우스밴드" description="비닐하우스 골조를 단단히 고정하는 밴드" icon={<Package />} visualClass="house-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link></div></section></Shell>; }
+export function ProductsPage({ categoryImages }: { categoryImages: Record<string, string | null> }) { return <Shell><section className="products section-pad"><div className="product-header"><div><Eyebrow>PRODUCT LINEUP</Eyebrow><h2>자연의 섬유로 만든<br /><em>단단한 보행의 기반.</em></h2></div><p>100% 천연 야자섬유(코이어)로 제작한 보행매트입니다.<br />노면 포장과 비포장도로의 흙 유실 방지에 사용됩니다.</p></div><CategoryNav images={categoryImages} /><div className="product-catalog"><Link className="product-card-link" href="/products/palm-mat"><ProductCard number="1" title="보행매트(야자매트)" description="자연의 섬유로 만든 보행의 기반" icon={<Leaf />} visualClass="mat-card-visual"><div className="product-tables"><Table title="보행매트 · 단위 m" rows={mats} /><Table title="고정핀 · 단위 개" rows={pins} /></div></ProductCard></Link><Link className="product-card-link" href="/products/cargo-tension-bar"><ProductCard number="2" title="화물차탄력바" description="화물 적재물을 단단하게 고정하는 탄력바" icon={<Truck />} visualClass="cargo-card-visual"><ul className="product-variants"><li>신초강력탄력바 50mm</li><li>초강력탄력바 50mm</li><li>고탄력바 50mm</li><li>고탄력바 65mm</li></ul></ProductCard></Link><Link className="product-card-link" href="/products/tree-band"><ProductCard number="3" title="수목천연밴드" description="나무를 보호하고 지지하는 천연 소재 밴드" icon={<TreePine />} visualClass="tree-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link><Link className="product-card-link" href="/products/tree-tie"><ProductCard number="4" title="지주목결속바" description="식재목과 지주목을 안정적으로 결속하는 밴드" icon={<Link2 />} visualClass="tie-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link><Link className="product-card-link" href="/products/house-band"><ProductCard number="5" title="하우스밴드" description="비닐하우스 골조를 단단히 고정하는 밴드" icon={<Package />} visualClass="house-card-visual"><p className="inquiry-note"><ShieldCheck size={18} /> 규격 문의: 전화 또는 이메일로 상담해 주세요.</p></ProductCard></Link></div></section></Shell>; }
 function ProductCard({ id, number, title, description, icon, visualClass, children }: { id?: string; number: string; title: string; description: string; icon: React.ReactNode; visualClass: string; children: React.ReactNode }) { return <article id={id} className="product-card-large"><div className={`product-card-visual ${visualClass}`}><span className="product-card-number">{number}</span><div className="product-card-icon">{icon}</div></div><div className="product-card-info"><h3>{title}</h3><p className="product-card-description">{description}</p><div className="product-card-content">{children}</div></div></article>; }
 export function PalmMatPage({ images }: { images: string[] }) {
   const mainImage = images[0] ?? "/보행매트-시공사진.png";
