@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, Check, Leaf, Link2, Mail, Menu, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
+import { ArrowRight, Check, Download, File, FileArchive, FileImage, FileSpreadsheet, FileText, Leaf, Link2, Mail, Menu, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
 import { verifyAdminPassword } from "./admin/actions";
+import type { DocumentFile } from "./document-utils";
 
 const mats = [["26001347", "ESMAT30-6"], ["26001348", "ESMAT30-8"], ["26008048", "ESMAT30-10"], ["26008049", "ESMAT30-12"], ["26001349", "ESMAT30-15"]];
 const pins = [["25991808", "ES-PIN-200"], ["25991809", "ES-PIN-250"], ["25985301", "ES-IPIN-250"], ["25985288", "ES-7PIN-200"], ["25985289", "ES-UPIN-200"]];
@@ -135,7 +136,46 @@ export function CertificationsPage() { return <Shell><section className="proof s
 
 export function ContactPage() { const [sent, setSent] = useState(false); const [mailLink, setMailLink] = useState(""); function submitInquiry(event: React.FormEvent<HTMLFormElement>) { event.preventDefault(); const data = new FormData(event.currentTarget); const body = `이름: ${data.get("name")}\n연락처: ${data.get("phone")}\n\n문의 내용:\n${data.get("message")}`; setMailLink(`mailto:ecosaehan@gmail.com?subject=${encodeURIComponent("에코새한 제품 문의")}&body=${encodeURIComponent(body)}`); setSent(true); } return <Shell><section className="contact section-pad"><div className="contact-inner"><div className="contact-copy"><Eyebrow>CONTACT</Eyebrow><h2>필요한 자재,<br /><em>정확하게 상담하세요.</em></h2><p>현장에 맞는 규격과 수량을 알려주시면<br />확인 후 빠르게 안내해 드립니다.</p><div className="contact-list"><a href="tel:0538518702"><Phone size={19} />053-851-8702</a><a href="mailto:ecosaehan@gmail.com"><Mail size={19} />ecosaehan@gmail.com</a><span><Leaf size={19} />경상북도 경산시 진량읍 아사길 81-14</span></div></div><form className="contact-form" onSubmit={submitInquiry}>{sent ? <div className="form-success"><Check size={38} /><h3>문의 내용이 준비되었습니다.</h3><p>아래 버튼을 눌러 메일 앱에서 전송을 완료해 주세요.</p><a className="button button-primary" href={mailLink}>메일로 전송하기 <ArrowRight size={17} /></a></div> : <><div className="form-heading"><h3>제품 및 견적 문의</h3><span>평일 09:00 - 18:00</span></div><label>이름<input required name="name" placeholder="담당자 성함" /></label><label>연락처<input required name="phone" placeholder="전화번호 또는 이메일" /></label><label>문의 내용<textarea required name="message" placeholder="필요한 제품, 규격, 수량을 남겨주세요." rows={4} /></label><button className="button button-primary" type="submit">문의 내용 작성하기 <ArrowRight size={17} /></button></>}</form></div></section></Shell>; }
 
-export function SupportMaterialsPage() { return <SupportPlaceholderPage title="설계자료실" />; }
+const FILE_TYPE_STYLES: Record<string, { icon: React.ReactNode; color: string }> = {
+  pdf: { icon: <FileText size={18} />, color: "#d64545" },
+  hwp: { icon: <File size={18} />, color: "#2f6fed" },
+  doc: { icon: <FileText size={18} />, color: "#2f6fed" },
+  docx: { icon: <FileText size={18} />, color: "#2f6fed" },
+  xls: { icon: <FileSpreadsheet size={18} />, color: "#1e7d4b" },
+  xlsx: { icon: <FileSpreadsheet size={18} />, color: "#1e7d4b" },
+  csv: { icon: <FileSpreadsheet size={18} />, color: "#1e7d4b" },
+  jpg: { icon: <FileImage size={18} />, color: "#9333ea" },
+  jpeg: { icon: <FileImage size={18} />, color: "#9333ea" },
+  png: { icon: <FileImage size={18} />, color: "#9333ea" },
+  gif: { icon: <FileImage size={18} />, color: "#9333ea" },
+  webp: { icon: <FileImage size={18} />, color: "#9333ea" },
+  zip: { icon: <FileArchive size={18} />, color: "#b45309" },
+  rar: { icon: <FileArchive size={18} />, color: "#b45309" },
+  "7z": { icon: <FileArchive size={18} />, color: "#b45309" }
+};
+const DEFAULT_FILE_STYLE = { icon: <File size={18} />, color: "#738077" };
+
+function formatFileSize(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+export function SupportMaterialsPage({ files }: { files: DocumentFile[] }) {
+  return <Shell><section className="section-pad materials-section">
+    <div className="section-heading"><Eyebrow>SUPPORT</Eyebrow><h2>설계자료실</h2></div>
+    {files.length === 0 ? <p className="materials-empty">등록된 자료가 없습니다. 준비되는 대로 업로드하겠습니다.</p> : <div className="file-board">
+      <div className="file-row file-row-head"><span>파일명</span><span>크기</span><span>업로드일</span></div>
+      {files.map(file => { const style = FILE_TYPE_STYLES[file.ext] ?? DEFAULT_FILE_STYLE; return <a key={file.name} className="file-row" href={file.url} download>
+        <span className="file-name"><span className="file-icon" style={{ background: style.color }}>{style.icon}</span>{file.name}</span>
+        <span className="file-size">{formatFileSize(file.size)}</span>
+        <span className="file-date">{file.modified.slice(0, 10)}</span>
+        <Download className="file-download-icon" size={16} />
+      </a>; })}
+    </div>}
+  </section></Shell>;
+}
+
 export function SupportFaqPage() { return <SupportPlaceholderPage title="FAQ" />; }
 
 export function AdminPage() {

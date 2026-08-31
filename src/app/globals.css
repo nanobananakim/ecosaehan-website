@@ -90,6 +90,25 @@ a { color:inherit; text-decoration:none; }
 
 .mini-row-single { grid-template-columns: 1fr; }
 
+.materials-section .section-heading { margin-bottom: 48px; }
+.materials-empty { color: var(--muted); font-size: 14px; }
+.file-board { border-top: 2px solid var(--ink); }
+.file-row { display: grid; grid-template-columns: 1fr 100px 130px 20px; align-items: center; gap: 16px; padding: 16px 4px; border-bottom: 1px solid var(--line); color: inherit; }
+.file-row-head { color: var(--muted); font-size: 11px; padding-bottom: 12px; }
+a.file-row:hover { background: var(--mint); }
+.file-name { display: flex; align-items: center; gap: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 600; }
+.file-icon { display: grid; place-items: center; flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; color: white; }
+.file-size, .file-date { font: 12px 'DM Mono'; color: var(--muted); }
+.file-download-icon { color: var(--muted); justify-self: end; transition: color 150ms ease; }
+a.file-row:hover .file-download-icon { color: var(--green); }
+
+@media (max-width: 800px) {
+  .file-row { grid-template-columns: 1fr 68px 88px 18px; gap: 8px; padding: 13px 2px; }
+  .file-name { font-size: 13px; gap: 8px; }
+  .file-icon { width: 28px; height: 28px; }
+  .file-size, .file-date { font-size: 10px; }
+}
+
 .about { background:white; }.about-grid { display:grid; grid-template-columns:.85fr 1.15fr; gap:100px; margin-top:68px; }.section-heading h2 { font-size:47px; }.about-statement { border-top:2px solid var(--green); padding-top:22px; }.about-statement p { font-size:20px; line-height:1.7; font-weight:600; letter-spacing:-1px; margin:0 0 29px; }.about-statement span { color:var(--muted); line-height:1.9; font-size:13px; }.company-info { display:grid; grid-template-columns:1fr 1fr; gap:0 40px; margin:0; border-top:1px solid var(--line); }.company-info div { display:grid; grid-template-columns:95px 1fr; padding:16px 0; border-bottom:1px solid var(--line); font-size:13px; }.company-info dt { color:var(--muted); }.company-info dd { margin:0; font-weight:600; }.company-info .wide { grid-column:1/-1; }
 .summary-section { border-top:1px solid var(--line); }.summary-inner { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:end; }.summary-section h2 { font-size:47px; line-height:1.2; letter-spacing:-3px; margin:0; }.summary-copy { display:flex; align-items:end; justify-content:space-between; gap:30px; }.summary-copy p { max-width:330px; margin:0; color:var(--muted); font-size:13px; line-height:1.9; }
 .greeting { position:relative; padding:27px 0 0 35px; border-left:3px solid var(--bright); color:#53645a; font-size:13px; line-height:1.95; }.greeting p { margin:0 0 17px; }.greeting strong { display:block; margin-top:27px; color:var(--ink); font-size:13px; }.quote-mark { position:absolute; top:-23px; left:17px; color:var(--bright); font:800 72px Georgia,serif; line-height:1; }
