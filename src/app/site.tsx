@@ -124,7 +124,7 @@ export function PalmMatPage({ images }: { images: string[] }) {
   return <Shell><section className="product-detail section-pad"><Link className="back-link" href="/products">← 제품소개로 돌아가기</Link><div className="detail-heading"><Eyebrow>PRODUCT 1</Eyebrow><h1>보행매트(야자매트)</h1><p>100% 천연 야자섬유(코이어)로 만든 보행매트입니다. 노면 포장과 비포장도로의 흙 유실 방지에 사용됩니다.</p></div><div className="palm-mat-stack">
     <img className="palm-mat-photo" src={mainImage} alt="보행매트(야자매트)" />
     <Table title="보행매트 · 단위 m" rows={mats} />
-    {secondImage ? <img className="palm-mat-photo" src={secondImage} alt="보행매트(야자매트) 시공 사진" /> : <div className="palm-mat-photo-placeholder">사진 준비 중</div>}
+    {secondImage ? <img className="palm-mat-photo palm-mat-photo-pins" src={secondImage} alt="보행매트(야자매트) 고정핀" /> : <div className="palm-mat-photo-placeholder">사진 준비 중</div>}
     <Table title="고정핀 · 단위 개" rows={pins} />
   </div></section></Shell>;
 }

@@ -425,6 +425,12 @@
   object-fit: cover;
 }
 
+.palm-mat-photo-pins {
+  aspect-ratio: 2 / 1;
+  object-fit: contain;
+  background: white;
+}
+
 .palm-mat-photo-placeholder {
   display: grid;
   place-items: center;
