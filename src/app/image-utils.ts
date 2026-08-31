@@ -16,6 +16,24 @@ export function listImages(publicDir: string): string[] {
   }
 }
 
+export function listImagesByNumberDesc(publicDir: string): string[] {
+  const absDir = path.join(process.cwd(), "public", publicDir);
+  try {
+    return fs
+      .readdirSync(absDir)
+      .filter(file => IMAGE_EXTENSIONS.includes(path.extname(file).toLowerCase()))
+      .sort((a, b) => {
+        const na = parseInt(a, 10);
+        const nb = parseInt(b, 10);
+        if (!isNaN(na) && !isNaN(nb)) return nb - na;
+        return b.localeCompare(a);
+      })
+      .map(file => `/${publicDir}/${file}`);
+  } catch {
+    return [];
+  }
+}
+
 export function findImage(publicDir: string, baseName: string): string | null {
   const absDir = path.join(process.cwd(), "public", publicDir);
   try {
