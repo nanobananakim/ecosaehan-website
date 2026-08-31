@@ -425,11 +425,33 @@
   object-fit: cover;
 }
 
-.palm-mat-photo-pins {
+/*
+ * 고정핀 사진은 5개 핀이 한 장에 합성된 이미지라 원본 파일을 건드리지 않고
+ * 첫 번째 핀(20cm)만 다른 핀 대비 짧게 보이도록 CSS 스프라이트로 잘라 보여준다.
+ * 아래 %값은 원본 이미지(1774x887)에서 각 핀의 실측 좌표를 기준으로 계산한 값.
+ */
+.pin-row {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 640px;
   aspect-ratio: 2 / 1;
-  object-fit: contain;
+  margin: 0 auto;
   background: white;
+  overflow: hidden;
 }
+
+.pin-cell {
+  height: 100%;
+  overflow: hidden;
+  background-repeat: no-repeat;
+}
+
+.pin-cell-1 { flex: 0 0 17.756%; background-size: 563.17% 100%; background-position: 0% 0; transform: scaleY(0.82); transform-origin: bottom; }
+.pin-cell-2 { flex: 0 0 19.842%; background-size: 503.98% 100%; background-position: 22.15% 0; }
+.pin-cell-3 { flex: 0 0 20.631%; background-size: 484.70% 100%; background-position: 47.37% 0; }
+.pin-cell-4 { flex: 0 0 18.828%; background-size: 531.14% 100%; background-position: 71.74% 0; }
+.pin-cell-5 { flex: 0 0 22.943%; background-size: 435.87% 100%; background-position: 100% 0; }
 
 .palm-mat-photo-placeholder {
   display: grid;
