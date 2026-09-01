@@ -111,6 +111,8 @@ a { color:inherit; text-decoration:none; }
   .cert-photo:before, .cert-photo:after { width: 13px; height: 13px; border-width: 1.5px; }
   .cert-photo:before { top: 5px; left: 5px; }
   .cert-photo:after { bottom: 5px; right: 5px; }
+  .greeting { margin-top: 32px; }
+  .quote-mark { top: 4px; }
 }
 
 @media (max-width: 480px) {

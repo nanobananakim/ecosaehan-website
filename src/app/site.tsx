@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Download, Leaf, Link2, Mail, Menu, MessageCircle, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
 import { verifyAdminPassword } from "./admin/actions";
 import type { DocumentFile } from "./document-utils";
@@ -23,6 +23,15 @@ export function Logo() {
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
+  const productsItemsRef = useRef<HTMLDivElement>(null);
+  const supportItemsRef = useRef<HTMLDivElement>(null);
+  const [productsHeight, setProductsHeight] = useState(0);
+  const [supportHeight, setSupportHeight] = useState(0);
+  useEffect(() => {
+    if (!menuOpen) return;
+    if (productsItemsRef.current) setProductsHeight(productsItemsRef.current.scrollHeight);
+    if (supportItemsRef.current) setSupportHeight(supportItemsRef.current.scrollHeight);
+  }, [menuOpen]);
   useEffect(() => {
     if (!menuOpen) return;
     const original = document.body.style.overflow;
@@ -43,8 +52,8 @@ export function Header() {
     <Link className="mega-trigger" href="/certifications" onClick={closeMenu}>인증·납품실적</Link>
     <button className="mega-trigger" type="button" aria-expanded={mobileSection === "support"} onClick={() => toggleSection("support")}>고객센터</button>
     <div className="mega-menu">
-      <div className={`mega-column${mobileSection === "products" ? " open" : ""}`}><button className="mega-heading" type="button" aria-expanded={mobileSection === "products"} onClick={() => toggleSection("products")}>제품소개</button><div className="mega-items-wrap"><div className="mega-items"><Link href="/products/palm-mat" onClick={closeMenu}>보행매트(야자매트)</Link><Link href="/products/cargo-tension-bar" onClick={closeMenu}>화물차탄력바</Link><Link href="/products/tree-band" onClick={closeMenu}>수목천연밴드</Link><Link href="/products/tree-tie" onClick={closeMenu}>지주목결속바</Link><Link href="/products/house-band" onClick={closeMenu}>하우스밴드</Link></div></div></div>
-      <div className={`mega-column${mobileSection === "support" ? " open" : ""}`}><button className="mega-heading" type="button" aria-expanded={mobileSection === "support"} onClick={() => toggleSection("support")}>고객센터</button><div className="mega-items-wrap"><div className="mega-items"><Link href="/contact" onClick={closeMenu}>문의하기</Link><Link href="/support/materials" onClick={closeMenu}>설계자료실</Link><Link href="/support/faq" onClick={closeMenu}>FAQ</Link></div></div></div>
+      <div className={`mega-column${mobileSection === "products" ? " open" : ""}`}><button className="mega-heading" type="button" aria-expanded={mobileSection === "products"} onClick={() => toggleSection("products")}>제품소개</button><div className="mega-items-wrap" style={{ "--accordion-h": `${productsHeight}px` } as React.CSSProperties}><div className="mega-items" ref={productsItemsRef}><Link href="/products/palm-mat" onClick={closeMenu}>보행매트(야자매트)</Link><Link href="/products/cargo-tension-bar" onClick={closeMenu}>화물차탄력바</Link><Link href="/products/tree-band" onClick={closeMenu}>수목천연밴드</Link><Link href="/products/tree-tie" onClick={closeMenu}>지주목결속바</Link><Link href="/products/house-band" onClick={closeMenu}>하우스밴드</Link></div></div></div>
+      <div className={`mega-column${mobileSection === "support" ? " open" : ""}`}><button className="mega-heading" type="button" aria-expanded={mobileSection === "support"} onClick={() => toggleSection("support")}>고객센터</button><div className="mega-items-wrap" style={{ "--accordion-h": `${supportHeight}px` } as React.CSSProperties}><div className="mega-items" ref={supportItemsRef}><Link href="/contact" onClick={closeMenu}>문의하기</Link><Link href="/support/materials" onClick={closeMenu}>설계자료실</Link><Link href="/support/faq" onClick={closeMenu}>FAQ</Link></div></div></div>
     </div>
     <Link className="home-link" href="/admin" onClick={closeMenu}>관리자</Link>
   </nav><button className="menu-toggle" aria-label={menuOpen ? "메뉴 닫기" : "메뉴 열기"} aria-expanded={menuOpen} onClick={() => { setMenuOpen(!menuOpen); setMobileSection(null); }}>{menuOpen ? <X /> : <Menu />}</button></div></header>;

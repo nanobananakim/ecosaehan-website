@@ -647,19 +647,14 @@
   }
 
   .mega-items-wrap {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 260ms ease;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 300ms ease;
     padding-left: 13px;
   }
 
-  .mega-items-wrap > .mega-items {
-    overflow: hidden;
-    min-height: 0;
-  }
-
   .mega-column.open .mega-items-wrap {
-    grid-template-rows: 1fr;
+    max-height: var(--accordion-h, 1000px);
   }
 
   .mega-items {
