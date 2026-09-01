@@ -87,8 +87,7 @@
   background: var(--mint);
 }
 
-.mega-trigger,
-.mega-heading {
+.mega-trigger {
   padding: 0;
   border: 0;
   color: inherit;
@@ -97,20 +96,26 @@
   cursor: pointer;
 }
 
-.mega-trigger:hover,
-.mega-heading:hover {
+.mega-trigger:hover {
   color: var(--green);
 }
 
-.mega-menu {
+/* Each dropdown-capable nav item owns its trigger AND its own submenu as a
+   direct sibling, so the submenu always renders under that specific item —
+   not a single shared panel anchored to a fixed spot in the nav bar. */
+.nav-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+}
+
+.nav-dropdown .mega-items-wrap {
   position: absolute;
-  top: calc(100% - 1px);
+  top: 100%;
   left: 50%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 42px;
-  width: min(520px, calc(100vw - 64px));
-  padding: 28px 32px 32px;
+  min-width: 220px;
+  padding: 20px 24px 24px;
   border-top: 1px solid var(--line);
   background: var(--cream);
   box-shadow: 0 16px 30px rgba(23, 53, 42, 0.1);
@@ -120,41 +125,22 @@
   transition: opacity 160ms ease, transform 160ms ease;
 }
 
-/* nav-wrap spans the header's full height, so hovering anywhere in the
-   header (not just the narrow nav-links text row) keeps the mega-menu
-   open, and hovering the mega-menu itself (nested inside nav-wrap)
-   keeps this true too — no dead zone between trigger and panel. */
-.nav-wrap:hover .mega-menu {
+.nav-dropdown:hover .mega-items-wrap {
   opacity: 1;
   pointer-events: auto;
   transform: translate(-50%, 0);
 }
 
-.mega-column {
-  min-width: 0;
-}
-
-.mega-heading {
-  display: block;
-  width: 100%;
-  padding-bottom: 13px;
-  border-bottom: 2px solid var(--ink);
-  color: var(--ink);
-  text-align: left;
-  font-size: 14px;
-  font-weight: 700;
-}
-
 .mega-items {
   display: grid;
   gap: 2px;
-  padding-top: 9px;
 }
 
 .mega-items a {
   padding: 9px 0;
   color: var(--muted);
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .mega-items a:hover {
@@ -624,43 +610,41 @@
     text-align: left;
   }
 
-  .mega-menu {
+  .nav-dropdown {
     position: static;
     display: block;
-    width: auto;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    box-shadow: none;
-    opacity: 1;
-    pointer-events: auto;
-    transform: none;
-  }
-
-  .mega-column {
+    align-items: normal;
+    align-self: auto;
     border-top: 1px solid var(--line);
   }
 
-  .mega-heading {
-    padding: 13px 0;
-    border: 0;
+  .nav-dropdown .mega-trigger {
+    border-top: 0;
   }
 
-  .mega-items-wrap {
+  .nav-dropdown .mega-items-wrap {
+    position: static;
     display: grid;
     grid-template-rows: 0fr;
+    min-width: 0;
+    padding: 0 0 0 13px;
+    border-top: 0;
+    background: transparent;
+    box-shadow: none;
     opacity: 0;
+    pointer-events: none;
+    transform: none;
     transition: grid-template-rows 300ms ease, opacity 300ms ease;
-    padding-left: 13px;
   }
 
   .mega-items-wrap > .mega-items {
     overflow: hidden;
   }
 
-  .mega-column.open .mega-items-wrap {
+  .nav-dropdown.open .mega-items-wrap {
     grid-template-rows: 1fr;
     opacity: 1;
+    pointer-events: auto;
   }
 
   .mega-items {
@@ -669,6 +653,7 @@
 
   .mega-items a {
     padding: 9px 0;
+    white-space: normal;
   }
 
   .category-row {
