@@ -125,10 +125,12 @@
   transition: opacity 160ms ease, transform 160ms ease;
 }
 
-.nav-dropdown:hover .mega-items-wrap {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, 0);
+@media (min-width: 801px) {
+  .nav-dropdown:hover .mega-items-wrap {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+  }
 }
 
 .mega-items {
