@@ -146,6 +146,26 @@ a { color:inherit; text-decoration:none; }
   .board-no, .board-author { font-size: 11px; }
 }
 
+.faq-section .section-heading { margin-bottom: 48px; }
+.faq-list { border-top: 2px solid var(--ink); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-question { display: flex; align-items: center; gap: 16px; width: 100%; padding: 20px 4px; border: 0; background: transparent; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.faq-question:hover { color: var(--green); }
+.faq-index { flex-shrink: 0; font: 12px 'DM Mono'; color: var(--green); }
+.faq-title { flex: 1; font-size: 15px; font-weight: 600; }
+.faq-chevron { flex-shrink: 0; color: var(--muted); transition: transform 200ms ease; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--green); }
+.faq-answer-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 300ms ease; }
+.faq-answer-wrap > .faq-answer { overflow: hidden; }
+.faq-item.open .faq-answer-wrap { grid-template-rows: 1fr; }
+.faq-answer p { margin: 0; padding: 0 32px 24px 44px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+@media (max-width: 800px) {
+  .faq-question { padding: 15px 2px; gap: 10px; }
+  .faq-title { font-size: 13px; }
+  .faq-answer p { padding: 0 4px 18px 30px; font-size: 13px; }
+}
+
 .about { background:white; }.about-grid { display:grid; grid-template-columns:.85fr 1.15fr; gap:100px; margin-top:68px; }.section-heading h2 { font-size:47px; }.about-statement { border-top:2px solid var(--green); padding-top:22px; }.about-statement p { font-size:20px; line-height:1.7; font-weight:600; letter-spacing:-1px; margin:0 0 29px; }.about-statement span { color:var(--muted); line-height:1.9; font-size:13px; }.company-info { display:grid; grid-template-columns:1fr 1fr; gap:0 40px; margin:0; border-top:1px solid var(--line); }.company-info div { display:grid; grid-template-columns:95px 1fr; padding:16px 0; border-bottom:1px solid var(--line); font-size:13px; }.company-info dt { color:var(--muted); }.company-info dd { margin:0; font-weight:600; }.company-info .wide { grid-column:1/-1; }
 .summary-section { border-top:1px solid var(--line); }.summary-inner { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:end; }.summary-section h2 { font-size:47px; line-height:1.2; letter-spacing:-3px; margin:0; }.summary-copy { display:flex; align-items:end; justify-content:space-between; gap:30px; }.summary-copy p { max-width:330px; margin:0; color:var(--muted); font-size:13px; line-height:1.9; }
 .greeting { position:relative; padding:27px 0 0 35px; border-left:3px solid var(--bright); color:#53645a; font-size:13px; line-height:1.95; }.greeting p { margin:0 0 17px; }.greeting strong { display:block; margin-top:27px; color:var(--ink); font-size:13px; }.quote-mark { position:absolute; top:-23px; left:17px; color:var(--bright); font:800 72px Georgia,serif; line-height:1; }

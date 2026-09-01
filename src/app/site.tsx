@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight, Check, File, FileArchive, FileImage, FileSpreadsheet, FileText, FileType, Leaf, Link2, Mail, Menu, MessageCircle, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, File, FileArchive, FileImage, FileSpreadsheet, FileText, FileType, Leaf, Link2, Mail, Menu, MessageCircle, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
 import { verifyAdminPassword } from "./admin/actions";
 import type { DocumentFile } from "./document-utils";
 
@@ -52,8 +52,6 @@ export function Footer() {
 
 function Shell({ children }: { children: React.ReactNode }) { return <><Header />{children}<Footer /></>; }
 function Eyebrow({ children }: { children: React.ReactNode }) { return <p className="eyebrow"><span />{children}</p>; }
-function SupportPlaceholderPage({ title }: { title: string }) { return <Shell><section className="section-pad"><div className="section-heading"><Eyebrow>SUPPORT</Eyebrow><h2>{title}</h2></div><p>준비 중입니다.</p></section></Shell>; }
-
 function HeroSlider({ slides }: { slides: string[] }) {
   if (slides.length === 0) {
     return <div className="hero-slider hero-slider-empty"><p>배너 이미지가 준비되는 대로 표시됩니다.</p></div>;
@@ -162,7 +160,45 @@ export function SupportMaterialsPage({ files }: { files: DocumentFile[] }) {
   </section></Shell>;
 }
 
-export function SupportFaqPage() { return <SupportPlaceholderPage title="FAQ" />; }
+const faqItems = [
+  {
+    category: "보행매트",
+    question: "보행매트 직접 생산하시나요?",
+    answer: "네, 에코새한 자체 야자매트 생산공장에서 직접 생산하고 있습니다. 원재료 선별부터 직조, 완제품 검수까지 전 과정을 자체 공장에서 진행하기 때문에 균일한 품질을 유지할 수 있습니다."
+  },
+  {
+    category: "보행매트",
+    question: "보행매트의 수명은 얼마나 가나요?",
+    answer: "설치 현장의 환경에 따라 차이가 있습니다. 사람이 주로 이용하는 산책로, 둘레길 같은 보행 전용 구간은 상대적으로 마모가 적어 오래 유지되는 편이고, 차량이나 중장비가 지나다니는 구간은 마찰과 하중이 커서 수명이 짧아질 수 있습니다. 통행량이 거의 없는 구간이라면 그만큼 더 오래 사용하실 수 있습니다. 정확한 현장 조건을 알려주시면 예상 수명에 대해 더 구체적으로 안내해드리겠습니다."
+  },
+  {
+    category: "보행매트",
+    question: "보행매트에 사용할 고정핀은 어떤 걸 골라야 하나요?",
+    answer: "현장 토양 상태에 따라 다릅니다. 땅속에 자갈이나 돌이 없는 무난한 토양이라면 ES-PIN-200 또는 ES-PIN-250을 사용하시면 됩니다. 다만 이 두 제품은 상대적으로 강도가 약한 편이라, 자갈이나 돌이 섞인 단단한 토양이라면 ES-IPIN-250, ES-7PIN-200, ES-UPIN-200 중 하나를 선택하시는 걸 추천드립니다. 매트와 매트를 서로 이어 고정할 때는 ES-7PIN-200 또는 ES-UPIN-200을 용도에 맞게 사용하시면 됩니다."
+  },
+  {
+    category: "보행매트",
+    question: "보행매트의 무게는 어느 정도 되나요?",
+    answer: "FITI시험연구원 공인 시험 결과 기준, 보행매트(ESMAT30-10)의 질량은 제곱미터(㎡)당 약 5,480.2g입니다. 실제 시공 시 필요한 전체 중량은 시공 면적에 따라 달라지니, 현장 규격을 알려주시면 정확한 총 중량을 계산해드릴 수 있습니다."
+  }
+];
+
+export function SupportFaqPage() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  return <Shell><section className="section-pad faq-section">
+    <div className="section-heading"><Eyebrow>SUPPORT</Eyebrow><h2>FAQ</h2></div>
+    <div className="faq-list">
+      {faqItems.map((item, i) => { const open = openIndex === i; return <div className={`faq-item${open ? " open" : ""}`} key={item.question}>
+        <button type="button" className="faq-question" aria-expanded={open} onClick={() => setOpenIndex(open ? null : i)}>
+          <span className="faq-index">Q{i + 1}</span>
+          <span className="faq-title"><span className="board-category">[{item.category}]</span> {item.question}</span>
+          <ChevronDown className="faq-chevron" size={18} />
+        </button>
+        <div className="faq-answer-wrap"><div className="faq-answer"><p>{item.answer}</p></div></div>
+      </div>; })}
+    </div>
+  </section></Shell>;
+}
 
 export function AdminPage() {
   const [password, setPassword] = useState("");
