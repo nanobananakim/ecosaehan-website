@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, Check, Download, Leaf, Link2, Mail, Menu, MessageCircle, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
 import { verifyAdminPassword } from "./admin/actions";
 import type { DocumentFile } from "./document-utils";
@@ -23,6 +23,12 @@ export function Logo() {
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = original; };
+  }, [menuOpen]);
   const closeMenu = () => {
     setMenuOpen(false);
     setMobileSection(null);
