@@ -39,7 +39,7 @@ export function Header() {
   return <header className="site-header"><div className="nav-wrap"><Logo /><nav className={menuOpen ? "nav-links open" : "nav-links"}>
     <Link className="home-link" href="/" onClick={closeMenu}>HOME</Link>
     <Link className="mega-trigger" href="/about" onClick={closeMenu}>회사소개</Link>
-    <div className={`nav-dropdown${mobileSection === "products" ? " open" : ""}`}><button className="mega-trigger" type="button" aria-expanded={mobileSection === "products"} onClick={() => toggleSection("products")}>제품소개</button><div className="mega-items-wrap"><div className="mega-items"><Link href="/products/palm-mat" onClick={closeMenu}>보행매트(야자매트)</Link><Link href="/products/cargo-tension-bar" onClick={closeMenu}>화물차탄력바</Link><Link href="/products/tree-band" onClick={closeMenu}>수목천연밴드</Link><Link href="/products/tree-tie" onClick={closeMenu}>지주목결속바</Link><Link href="/products/house-band" onClick={closeMenu}>하우스밴드</Link></div></div></div>
+    <Link className="mega-trigger" href="/products" onClick={closeMenu}>제품소개</Link>
     <Link className="mega-trigger" href="/certifications" onClick={closeMenu}>인증·납품실적</Link>
     <div className={`nav-dropdown${mobileSection === "support" ? " open" : ""}`}><button className="mega-trigger" type="button" aria-expanded={mobileSection === "support"} onClick={() => toggleSection("support")}>고객센터</button><div className="mega-items-wrap"><div className="mega-items"><Link href="/contact" onClick={closeMenu}>문의하기</Link><Link href="/support/materials" onClick={closeMenu}>설계자료실</Link><Link href="/support/faq" onClick={closeMenu}>FAQ</Link></div></div></div>
     <Link className="home-link admin-link" href="/admin" onClick={closeMenu}><Lock className="admin-lock-icon" size={26} strokeWidth={2.2} />관리자</Link>
