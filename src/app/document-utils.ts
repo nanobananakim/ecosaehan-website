@@ -34,7 +34,7 @@ export function listDocuments(publicDir: string): DocumentFile[] {
           name: file,
           title: titles[file] ?? path.basename(file, path.extname(file)),
           category: categories[file] ?? "기타",
-          url: `/${publicDir}/${file}`,
+          url: `/${publicDir}/${encodeURIComponent(file)}`,
           ext: path.extname(file).slice(1).toLowerCase(),
           size: stat.size,
           modified: stat.mtime.toISOString()
