@@ -128,6 +128,7 @@ a { color:inherit; text-decoration:none; }
 .board-row:not(.board-head):hover { background: var(--mint); }
 .board-no { text-align: center; font: 12px 'DM Mono'; color: var(--muted); }
 .board-title { color: inherit; font-size: 14px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; }
+.board-category { color: var(--green); }
 .board-title:hover { color: var(--green); text-decoration: underline; }
 .board-file { display: flex; justify-content: center; align-items: center; color: var(--muted); transition: color 150ms ease; }
 .board-file:hover { color: var(--green); }

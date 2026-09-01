@@ -144,7 +144,7 @@ export function SupportMaterialsPage({ files }: { files: DocumentFile[] }) {
       <div className="board-row board-head"><span className="board-no">번호</span><span>제목</span><span>첨부파일</span><span>작성자</span></div>
       {files.map((file, i) => <div className="board-row" key={file.name}>
         <span className="board-no">{total - i}</span>
-        <a className="board-title" href={file.url} target="_blank" rel="noopener noreferrer">{file.title}</a>
+        <a className="board-title" href={file.url} target="_blank" rel="noopener noreferrer"><span className="board-category">[{file.category}]</span> {file.title}</a>
         <a className="board-file" href={file.url} target="_blank" rel="noopener noreferrer" aria-label={`${file.title} 다운로드`}><Download size={18} /></a>
         <span className="board-author">관리자</span>
       </div>)}
