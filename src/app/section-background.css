@@ -647,14 +647,20 @@
   }
 
   .mega-items-wrap {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 300ms ease;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 300ms ease, opacity 300ms ease;
     padding-left: 13px;
   }
 
+  .mega-items-wrap > .mega-items {
+    overflow: hidden;
+  }
+
   .mega-column.open .mega-items-wrap {
-    max-height: var(--accordion-h, 1000px);
+    grid-template-rows: 1fr;
+    opacity: 1;
   }
 
   .mega-items {
