@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight, Check, Download, Leaf, Link2, Mail, Menu, MessageCircle, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
+import { ArrowRight, Check, File, FileArchive, FileImage, FileSpreadsheet, FileText, FileType, Leaf, Link2, Mail, Menu, MessageCircle, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
 import { verifyAdminPassword } from "./admin/actions";
 import type { DocumentFile } from "./document-utils";
 
@@ -136,18 +136,28 @@ export function CertificationsPage({ images }: { images: string[] }) { return <S
 
 export function ContactPage() { const [sent, setSent] = useState(false); const [mailLink, setMailLink] = useState(""); function submitInquiry(event: React.FormEvent<HTMLFormElement>) { event.preventDefault(); const data = new FormData(event.currentTarget); const body = `이름: ${data.get("name")}\n연락처: ${data.get("phone")}\n\n문의 내용:\n${data.get("message")}`; setMailLink(`mailto:ecosaehan@gmail.com?subject=${encodeURIComponent("에코새한 제품 문의")}&body=${encodeURIComponent(body)}`); setSent(true); } return <Shell><section className="contact section-pad"><div className="contact-inner"><div className="contact-copy"><Eyebrow>CONTACT</Eyebrow><h2>필요한 자재,<br /><em>정확하게 상담하세요.</em></h2><p>현장에 맞는 규격과 수량을 알려주시면<br />확인 후 빠르게 안내해 드립니다.</p><div className="quick-contact"><a className="button button-outline" href="mailto:ecosaehan@gmail.com"><Mail size={17} />이메일로 문의하기</a><a className="button button-kakao" href="https://pf.kakao.com/_JxfJxaX" target="_blank" rel="noopener noreferrer"><MessageCircle size={17} />카카오톡으로 문의하기</a></div><div className="contact-list"><a href="tel:0538518702"><Phone size={28} />053-851-8702</a><a href="mailto:ecosaehan@gmail.com"><Mail size={28} />ecosaehan@gmail.com</a><span><Leaf size={28} />경상북도 경산시 진량읍 아사길 81-14</span></div></div><form className="contact-form" onSubmit={submitInquiry}>{sent ? <div className="form-success"><Check size={38} /><h3>문의 내용이 준비되었습니다.</h3><p>아래 버튼을 눌러 메일 앱에서 전송을 완료해 주세요.</p><a className="button button-primary" href={mailLink}>메일로 전송하기 <ArrowRight size={17} /></a></div> : <><div className="form-heading"><h3>제품 및 견적 문의</h3><span>평일 09:00 - 18:00</span></div><label>이름<input required name="name" placeholder="담당자 성함" /></label><label>연락처<input required name="phone" placeholder="전화번호 또는 이메일" /></label><label>문의 내용<textarea required name="message" placeholder="필요한 제품, 규격, 수량을 남겨주세요." rows={4} /></label><button className="button button-primary" type="submit">문의 내용 작성하기 <ArrowRight size={17} /></button></>}</form></div></section></Shell>; }
 
+function fileTypeMeta(ext: string): { Icon: typeof File; label: string; className: string } {
+  const e = ext.toLowerCase();
+  if (e === "pdf") return { Icon: FileText, label: "PDF 파일", className: "file-icon-pdf" };
+  if (e === "hwp" || e === "hwpx") return { Icon: FileType, label: "한글 문서", className: "file-icon-hwp" };
+  if (e === "xlsx" || e === "xls" || e === "csv") return { Icon: FileSpreadsheet, label: "엑셀 파일", className: "file-icon-excel" };
+  if (["jpg", "jpeg", "png", "gif", "webp", "bmp", "svg"].includes(e)) return { Icon: FileImage, label: "이미지 파일", className: "file-icon-image" };
+  if (["zip", "rar", "7z", "tar", "gz"].includes(e)) return { Icon: FileArchive, label: "압축 파일", className: "file-icon-archive" };
+  return { Icon: File, label: "문서 파일", className: "file-icon-default" };
+}
+
 export function SupportMaterialsPage({ files }: { files: DocumentFile[] }) {
   const total = files.length;
   return <Shell><section className="section-pad materials-section">
     <div className="section-heading"><Eyebrow>SUPPORT</Eyebrow><h2>설계자료실</h2></div>
     {files.length === 0 ? <p className="materials-empty">등록된 자료가 없습니다. 준비되는 대로 업로드하겠습니다.</p> : <div className="board">
       <div className="board-row board-head"><span className="board-no">번호</span><span>제목</span><span>첨부파일</span><span>작성자</span></div>
-      {files.map((file, i) => <div className="board-row" key={file.name}>
+      {files.map((file, i) => { const { Icon, label, className } = fileTypeMeta(file.ext); return <div className="board-row" key={file.name}>
         <span className="board-no">{total - i}</span>
         <a className="board-title" href={file.url} target="_blank" rel="noopener noreferrer"><span className="board-category">[{file.category}]</span> {file.title}</a>
-        <a className="board-file" href={file.url} target="_blank" rel="noopener noreferrer" aria-label={`${file.title} 다운로드`}><Download size={18} /></a>
+        <a className={`board-file ${className}`} href={file.url} target="_blank" rel="noopener noreferrer" title={label} aria-label={`${file.title} 다운로드 (${label})`}><Icon size={18} /></a>
         <span className="board-author">관리자</span>
-      </div>)}
+      </div>; })}
     </div>}
   </section></Shell>;
 }
