@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight, Check, ChevronDown, File, FileArchive, FileImage, FileSpreadsheet, FileText, FileType, Leaf, Link2, Mail, Menu, MessageCircle, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, File, FileArchive, FileImage, FileSpreadsheet, FileText, FileType, Leaf, Link2, Lock, Mail, Menu, MessageCircle, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
 import { verifyAdminPassword } from "./admin/actions";
 import type { DocumentFile } from "./document-utils";
 
@@ -42,7 +42,7 @@ export function Header() {
     <div className={`nav-dropdown${mobileSection === "products" ? " open" : ""}`}><button className="mega-trigger" type="button" aria-expanded={mobileSection === "products"} onClick={() => toggleSection("products")}>제품소개</button><div className="mega-items-wrap"><div className="mega-items"><Link href="/products/palm-mat" onClick={closeMenu}>보행매트(야자매트)</Link><Link href="/products/cargo-tension-bar" onClick={closeMenu}>화물차탄력바</Link><Link href="/products/tree-band" onClick={closeMenu}>수목천연밴드</Link><Link href="/products/tree-tie" onClick={closeMenu}>지주목결속바</Link><Link href="/products/house-band" onClick={closeMenu}>하우스밴드</Link></div></div></div>
     <Link className="mega-trigger" href="/certifications" onClick={closeMenu}>인증·납품실적</Link>
     <div className={`nav-dropdown${mobileSection === "support" ? " open" : ""}`}><button className="mega-trigger" type="button" aria-expanded={mobileSection === "support"} onClick={() => toggleSection("support")}>고객센터</button><div className="mega-items-wrap"><div className="mega-items"><Link href="/contact" onClick={closeMenu}>문의하기</Link><Link href="/support/materials" onClick={closeMenu}>설계자료실</Link><Link href="/support/faq" onClick={closeMenu}>FAQ</Link></div></div></div>
-    <Link className="home-link" href="/admin" onClick={closeMenu}>관리자</Link>
+    <Link className="home-link admin-link" href="/admin" onClick={closeMenu}><Lock className="admin-lock-icon" size={12} />관리자</Link>
   </nav><button className="menu-toggle" aria-label={menuOpen ? "메뉴 닫기" : "메뉴 열기"} aria-expanded={menuOpen} onClick={() => { setMenuOpen(!menuOpen); setMobileSection(null); }}>{menuOpen ? <X /> : <Menu />}</button></div></header>;
 }
 
