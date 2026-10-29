@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowRight, Check, ChevronDown, File, FileArchive, FileImage, FileSpreadsheet, FileText, FileType, Leaf, Link2, Lock, Mail, Menu, MessageCircle, Package, Phone, ShieldCheck, Truck, TreePine, X } from "lucide-react";
-import { verifyAdminPassword } from "./admin/actions";
 import type { DocumentFile } from "./document-utils";
 
 const mats = [["26001347", "ESMAT30-6"], ["26001348", "ESMAT30-8"], ["26008048", "ESMAT30-10"], ["26008049", "ESMAT30-12"], ["26001349", "ESMAT30-15"]];
@@ -213,22 +212,4 @@ export function SupportFaqPage() {
       </div>; })}
     </div>
   </section></Shell>;
-}
-
-export function AdminPage() {
-  const [password, setPassword] = useState("");
-  const [authed, setAuthed] = useState(false);
-  const [error, setError] = useState(false);
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (await verifyAdminPassword(password)) {
-      setAuthed(true);
-      setError(false);
-    } else {
-      setError(true);
-    }
-  }
-
-  return <Shell><section className="section-pad admin-section">{authed ? <div className="admin-content"><Eyebrow>ADMIN</Eyebrow><h2>관리자 페이지입니다</h2></div> : <form className="admin-login" onSubmit={handleSubmit}><Eyebrow>ADMIN</Eyebrow><h2>관리자 로그인</h2><input type="password" value={password} onChange={event => setPassword(event.target.value)} placeholder="비밀번호" autoFocus required /><button className="button button-primary" type="submit">확인</button>{error && <p className="admin-error">비밀번호가 일치하지 않습니다</p>}</form>}</section></Shell>;
 }
