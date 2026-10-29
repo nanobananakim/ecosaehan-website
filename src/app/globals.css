@@ -231,3 +231,5 @@ footer { background:var(--ink); color:#dce8da; padding:46px 0 28px; }.footer-inn
 .board-cat-row.sub { padding-left:16px; }
 .board-cats button { border:1px solid var(--line); background:var(--cream); padding:3px 9px; font-size:12px; cursor:pointer; }
 .board-cat-foot { display:flex; align-items:center; gap:12px; margin-top:14px; font-size:13px; color:var(--muted); }
+.board-nav a.board-write-link { display:flex; align-items:center; justify-content:center; gap:6px; margin:0 0 14px; padding:9px 0; background:var(--green); color:#fff; font-weight:700; text-decoration:none; }
+.board-write { margin-top:0; }

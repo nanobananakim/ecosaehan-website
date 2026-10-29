@@ -48,8 +48,7 @@ export function WriteForm({ categories, defaultCategory }: { categories: string[
       if (!res.ok) {
         setStatus(res.error);
       } else {
-        form.reset();
-        setStatus("등록했어요.");
+        router.push("/admin");
         router.refresh();
       }
     } catch (e) {

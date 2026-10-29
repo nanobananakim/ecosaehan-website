@@ -16,10 +16,7 @@ export type BoardPost = {
 
 export type CategoryGroup = { name: string; items: string[] };
 
-export const DEFAULT_GROUPS: CategoryGroup[] = [
-  { name: "Unusual Whales", items: ["실전 분석 기록", "옵션 실전 해석", "옵션 용어 정리", "UW 사용법", "앱 아이디어 노트", "Tip"] },
-  { name: "회계팀 박차장", items: [] },
-];
+export const DEFAULT_GROUPS: CategoryGroup[] = [];
 
 export const CATEGORIES_PATH = "board/categories.json";
 

@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Download, Eye, Folder } from "lucide-react";
+import { Download, Eye, Folder, Pencil } from "lucide-react";
 import { Footer, Header } from "../site";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
-import { categoriesFor, getGroups, getPost, isNew, listPosts, writableCategories } from "@/lib/board";
+import { categoriesFor, getGroups, getPost, isNew, listPosts } from "@/lib/board";
 import { login, logout } from "./actions";
 import { CategoryManager } from "./category-manager";
-import { WriteForm } from "./write-form";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "관리자 | 에코새한", robots: { index: false, follow: false } };
@@ -41,7 +40,6 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
   }
 
   const groups = await getGroups();
-  const writable = writableCategories(groups);
   const wanted = categoriesFor(groups, c);
   const selected = wanted ? c : undefined;
   const [all, post] = await Promise.all([listPosts(), p ? getPost(p) : Promise.resolve(null)]);
@@ -51,7 +49,6 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
     const q = [cat && `c=${encodeURIComponent(cat)}`, id && `p=${id}`].filter(Boolean).join("&");
     return q ? `/admin?${q}` : "/admin";
   };
-  const defaultCategory = wanted?.[0] ?? writable[0];
 
   return (
     <>
@@ -63,6 +60,7 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
         </div>
         <div className="board-layout">
           <nav className="board-nav" aria-label="카테고리">
+            <Link href={selected ? `/admin/write?c=${encodeURIComponent(selected)}` : "/admin/write"} className="board-write-link"><Pencil size={15} />글쓰기</Link>
             <p className="board-nav-title">카테고리</p>
             <Link href={href()} className={!selected ? "on strong" : "strong"}>전체보기 <span>({all.length})</span></Link>
             {groups.map(g => (
@@ -106,7 +104,6 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
             </ul>
 
             <CategoryManager groups={groups} />
-            <WriteForm key={defaultCategory} categories={writable} defaultCategory={defaultCategory} />
           </div>
         </div>
       </section>
