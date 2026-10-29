@@ -4,7 +4,7 @@ import { Download, Eye, Folder, Pencil } from "lucide-react";
 import { Footer, Header } from "../site";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
 import { categoriesFor, getGroups, getPost, isNew, listPosts } from "@/lib/board";
-import { login, logout } from "./actions";
+import { login } from "./actions";
 import { CategoryManager } from "./category-manager";
 
 export const dynamic = "force-dynamic";
@@ -56,7 +56,6 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
       <section className="section-pad board-section">
         <div className="board-top">
           <h2>자료실</h2>
-          <form action={logout}><button type="submit" className="button button-outline">로그아웃</button></form>
         </div>
         <div className="board-layout">
           <nav className="board-nav" aria-label="카테고리">

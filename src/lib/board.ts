@@ -16,7 +16,11 @@ export type BoardPost = {
 
 export type CategoryGroup = { name: string; items: string[] };
 
-export const DEFAULT_GROUPS: CategoryGroup[] = [];
+export const DEFAULT_GROUPS: CategoryGroup[] = [
+  { name: "문서", items: [] },
+  { name: "이미지", items: [] },
+  { name: "파일", items: [] },
+];
 
 export const CATEGORIES_PATH = "board/categories.json";
 
